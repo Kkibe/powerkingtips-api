@@ -8,14 +8,14 @@ router.post('/', verifyToken, async (req, res) => {
     try{
         const savedPost = await newPost.save();
         res.status(200).json(savedPost);
-
+    
     } catch (err) {
         res.status(500).json(err);
     }
 })
 
 //UPDATE A POST
-router.put('/:id', verifyTokenAndAdmin, async (req, res) => {
+router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
     try{ 
         const updatedPost = Post.findByIdAndUpdate(req.params.id, {
             $set: req.body
@@ -28,7 +28,7 @@ router.put('/:id', verifyTokenAndAdmin, async (req, res) => {
 })
 
 //DELETE A POST
-router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
+router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
     try{
         await Order.findByIdAndDelete(req.params.id);
         res.status(200).json('Order has been deleted...');
